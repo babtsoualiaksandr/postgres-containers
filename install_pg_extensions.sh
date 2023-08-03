@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bashh
 set -euxo pipefail
 
 # calling syntax: install_pg_extensions.sh [extension1] [extension2] ...
@@ -38,6 +38,15 @@ for EXTENSION in ${EXTENSIONS}; do
         # cleanup
         apt-get remove apt-transport-https lsb-release wget --auto-remove -y
 
+        continue
+    fi
+    if [ "$EXTENSION" == "pg_repack" ]; then
+        apt-get update
+        apt-get install --yes pg_repack
+        cd pg_repack
+        make
+        sudo make install
+        echo "Extension '${EXTENSION}' OKKKK"
         continue
     fi
 
